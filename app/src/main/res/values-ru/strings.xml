@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Images Library</string>
+    <string name="action_about">О приложении</string>
+    <string name="action_share">Поделиться</string>
+    <string name="action_download">Скачать</string>
+    <string name="action_search">Поиск</string>
+    <string name="action_search_hint">Введите ваш запрос</string>
+    <string name="action_share_extra_text">Больше красивых фото на Pexels\n</string>
+    <string name="action_share_message">Поделитесь фото с друзьями</string>
+    <string name="activity_main_search_empty">По вашему запросу ничего не найдено!\nПожалуйста, попробуйте еще раз.</string>
+    <string name="notification_no_internet_connection">Нет интернет соединения</string>
+    <string name="activity_about_description">
+        Это приложение показывает фото с <a href="https://www.pexels.com/">pexels.com</a> - бесплатного хостинга изображений.
+        \n\nДля получения большей информации о Pexels вы можете посетить их сайт.</string>
+    <string name="activity_about_author"><a href="https://www.linkedin.com/in/olga-ponkratova">Об авторе</a></string>
+    <string name="activity_about_title">О приложении</string>
+    <string name="activity_main_description_imageview">Это изображение в галлерее.</string>
+    <string name="photo_activity_description_imageview">Это изображение на отдельном экране</string>
+    <string name="photo_activity_downloaded_alert">Изображение загружено.</string>
+</resources>

@@ -1,0 +1,13 @@
+<resources>
+    <dimen name="toolbar_elevation">8dp</dimen>
+    <dimen name="progressbar_size">40dp</dimen>
+    <dimen name="activity_main_layout_margin_top">16dp</dimen>
+    <dimen name="activity_main_layout_margin_top_big">24dp</dimen>
+    <dimen name="activity_main_cardview_margin">2dp</dimen>
+    <dimen name="textsize_error_notification">16sp</dimen>
+    <dimen name="textsize_about">18sp</dimen>
+    <dimen name="activity_about_layout_margin">16dp</dimen>
+    <dimen name="activity_about_layout_padding">16dp</dimen>
+    <dimen name="activity_about_layout_padding_big">24dp</dimen>
+    <dimen name="activity_about_line_height">1dp</dimen>
+</resources>

@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Images Library</string>
+    <string name="action_about">About</string>
+    <string name="action_share">Share</string>
+    <string name="action_download">Download</string>
+    <string name="action_search">Search</string>
+    <string name="action_search_hint">Enter your query</string>
+    <string name="action_share_extra_text">Amazing photos on Pexels\n</string>
+    <string name="action_share_message">Share photos with friends</string>
+    <string name="notification_no_internet_connection">No internet connection!</string>
+    <string name="activity_main_search_empty">No search results!\nPlease try again.</string>
+    <string name="activity_about_title">About</string>
+    <string name="activity_about_description">
+        This app shows photos from <a href="https://www.pexels.com/">pexels.com</a> - free stock photos resource.
+        \n\nFor more info about Pexels check out their site.
+    </string>
+    <string name="activity_about_author"><a href="https://www.linkedin.com/in/olga-ponkratova">About author</a></string>
+    <string name="activity_main_description_imageview">This is the image from the images list.</string>
+    <string name="photo_activity_description_imageview">This is the screen with one image.</string>
+    <string name="photo_activity_downloaded_alert">Image successfully downloaded.</string>
+</resources>
