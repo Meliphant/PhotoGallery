@@ -5,6 +5,7 @@ import android.support.test.espresso.IdlingResource;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.widget.EditText;
+import android.support.test.espresso.IdlingRegistry;
 
 import com.example.android.galleryacademyyandex.app.AppQueryPreferences;
 import com.example.android.galleryacademyyandex.ui.MainActivity;
@@ -33,7 +34,7 @@ public class MainActivityCorrectSearchTest {
     @Before
     public void registerIdlingResource() {
         mIdlingResource = mActivityTestRule.getActivity().getIdlingResource();
-
+        IdlingRegistry.getInstance().register(mIdlingResource);
     }
 
     @Test
@@ -46,7 +47,7 @@ public class MainActivityCorrectSearchTest {
     @After
     public void unregisterIdlingResource() {
         if (mIdlingResource != null) {
-            Espresso.unregisterIdlingResources(mIdlingResource);
+            IdlingRegistry.getInstance().unregister(mIdlingResource);
         }
     }
 }
