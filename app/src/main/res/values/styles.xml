@@ -1,5 +1,4 @@
 <resources>
-
     <!-- MainActivity application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light">
         <item name="android:windowBackground">?attr/colorPrimaryDark</item>
@@ -10,7 +9,6 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-
     <!-- PhotoActivity application theme. -->
     <style name="PhotoTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="android:windowBackground">?attr/colorPrimaryDark</item>
@@ -19,7 +17,6 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-
     <!-- Customize color of back arrow -->
     <style name="PhotoToolbarStyle" parent="@style/ThemeOverlay.AppCompat.ActionBar">
         <item name="colorControlNormal">@color/colorAccentPhotoActivity</item>
