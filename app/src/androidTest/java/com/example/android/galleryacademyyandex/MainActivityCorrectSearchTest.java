@@ -33,7 +33,7 @@ public class MainActivityCorrectSearchTest {
     @Before
     public void registerIdlingResource() {
         mIdlingResource = mActivityTestRule.getActivity().getIdlingResource();
-        Espresso.registerIdlingResources(mIdlingResource);
+
     }
 
     @Test

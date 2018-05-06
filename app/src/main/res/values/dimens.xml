@@ -7,7 +7,7 @@
     <dimen name="textsize_error_notification">16sp</dimen>
     <dimen name="textsize_about">18sp</dimen>
     <dimen name="activity_about_layout_margin">16dp</dimen>
-    <dimen name="activity_about_layout_padding">16dp</dimen>
+    <dimen name="activity_about_layout_icon_padding">8dp</dimen>
     <dimen name="activity_about_layout_padding_big">24dp</dimen>
     <dimen name="activity_about_line_height">1dp</dimen>
 </resources>

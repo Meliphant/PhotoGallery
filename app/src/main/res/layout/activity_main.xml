@@ -23,6 +23,7 @@
         android:layout_height="@dimen/progressbar_size"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/activity_main_layout_margin_top"
+        android:theme="@style/AppTheme"
         android:visibility="gone" />
 
     <TextView

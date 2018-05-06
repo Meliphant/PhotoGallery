@@ -2,7 +2,6 @@ package com.example.android.galleryacademyyandex.model.dto;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.VisibleForTesting;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -16,7 +15,7 @@ import com.google.gson.annotations.SerializedName;
 public class Src implements Parcelable{
     @SerializedName("large")
     @Expose
-    private String large;
+    private final String large;
     @SerializedName("medium")
     @Expose
     private final String medium;

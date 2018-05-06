@@ -17,13 +17,15 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.android.galleryacademyyandex.R;
 import com.example.android.galleryacademyyandex.app.App;
-import com.example.android.galleryacademyyandex.model.dto.Src;
 import com.github.chrisbanes.photoview.PhotoView;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -45,11 +47,12 @@ public class PhotoActivity extends AppCompatActivity {
     public static final String INTENT_PHOTO = "photo";
     private static final String SHARE_TYPE = "text/html";
     private static final String DATE_FORMAT = "ddMMyyyy_HHmmss";
-    private static final String TAG = PhotoActivity.class.getSimpleName();
-    private Src src;
+
     private Context mContext;
     private boolean isInternetAvailable = true;
     private String mImageUrl;
+    private ProgressBar mLoadingItem;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +66,9 @@ public class PhotoActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
+        mLoadingItem = findViewById(R.id.pb_loading_indicator_photo);
+        mLoadingItem.setVisibility(View.VISIBLE);
+
         PhotoView mSelectedImage = findViewById(R.id.iv_photo_activity);
         final Intent startIntent = getIntent();
         mImageUrl = startIntent.getStringExtra(INTENT_PHOTO);
@@ -72,6 +78,7 @@ public class PhotoActivity extends AppCompatActivity {
         } else {
             Toast.makeText(this, R.string.notification_no_internet_connection, Toast.LENGTH_LONG).show();
             isInternetAvailable = false;
+            mLoadingItem.setVisibility(View.GONE);
         }
     }
 
@@ -79,7 +86,17 @@ public class PhotoActivity extends AppCompatActivity {
         Picasso.with(context)
                 .load(url)
                 .placeholder(R.drawable.placeholder_image)
-                .into(imageView);
+                .into(imageView, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        mLoadingItem.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onError() {
+                        mLoadingItem.setVisibility(View.GONE);
+                    }
+                });
     }
 
     @Override
@@ -147,7 +164,7 @@ public class PhotoActivity extends AppCompatActivity {
     }
 
     // Save image.
-    public void imageDownload(String mImageUrl, Context context) {
+    private void imageDownload(String mImageUrl, Context context) {
         Date date = Calendar.getInstance().getTime();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.getDefault());
         String timestamp = simpleDateFormat.format(date);
@@ -167,7 +184,6 @@ public class PhotoActivity extends AppCompatActivity {
                                 + "/" + "Camera" + "/" + name);
                         try {
                             Log.d("Download", file.toString());
-                            file.createNewFile();
                             FileOutputStream ostream = new FileOutputStream(file);
                             bitmap.compress(Bitmap.CompressFormat.JPEG, 75, ostream);
                             ostream.close();
@@ -188,7 +204,7 @@ public class PhotoActivity extends AppCompatActivity {
         };
     }
 
-    public boolean isStoragePermissionGranted() {
+    private boolean isStoragePermissionGranted() {
         if (Build.VERSION.SDK_INT >= 23) {
             if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     == PackageManager.PERMISSION_GRANTED) {

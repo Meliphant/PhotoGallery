@@ -43,15 +43,18 @@ public class MainActivity extends AppCompatActivity implements PhotosView {
     // Constant for debug notification.
     private static final String TAG = MainActivity.class.getSimpleName();
 
-    Toolbar toolbar;
+    private Toolbar toolbar;
     private String mSearchQuery;
     private TextView mEmptyView;
     private ProgressBar mLoadingItem;
     private RecyclerView mRecyclerView;
     private List<Photo> mListOfObjects;
+    private RecyclerView.Adapter mAdapter;
     private PhotosPresenter mPhotosPresenter;
+    private boolean isInternetAvailable = true;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private StaggeredGridLayoutManager mLayoutManager;
+
 
     @Nullable
     private SimpleIdlingResource mIdlingResource;
@@ -98,17 +101,15 @@ public class MainActivity extends AppCompatActivity implements PhotosView {
         mEmptyView = findViewById(R.id.empty_view);
         mRecyclerView = findViewById(R.id.recycler_view);
         mLoadingItem = findViewById(R.id.pb_loading_indicator_main);
-        mLoadingItem.getIndeterminateDrawable()
-                .setColorFilter(getResources().getColor(R.color.colorPrimaryMainActivity),
-                        android.graphics.PorterDuff.Mode.MULTIPLY);
         mPhotosPresenter = App.getPhotosPresenter();
         mSwipeRefreshLayout = findViewById(R.id.swipe_refresh);
         mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimaryMainActivity);
         toolbar = findViewById(R.id.toolbar_main);
     }
+
     // Set staggered grid to the RecyclerView.
     private void setUpRecycler(List<Photo> listOfObjects) {
-        RecyclerView.Adapter mAdapter = new PhotosAdapter(this, listOfObjects);
+        mAdapter = new PhotosAdapter(this, listOfObjects);
         if (getScreenOrientation().equals("portrait")) {
             mLayoutManager = new StaggeredGridLayoutManager(COLUMN_NUMBER_PORTRAIT, StaggeredGridLayoutManager.VERTICAL);
         } else {
@@ -121,9 +122,9 @@ public class MainActivity extends AppCompatActivity implements PhotosView {
     }
 
     private void showEmptyResult(int emptyViewStatus, int recyclerViewStatus, int message) {
-            mEmptyView.setVisibility(emptyViewStatus);
-            mEmptyView.setText(message);
-            mRecyclerView.setVisibility(recyclerViewStatus);
+        mEmptyView.setVisibility(emptyViewStatus);
+        mEmptyView.setText(message);
+        mRecyclerView.setVisibility(recyclerViewStatus);
     }
 
     @Override
@@ -145,23 +146,20 @@ public class MainActivity extends AppCompatActivity implements PhotosView {
 
         mListOfObjects.clear();
         mRecyclerView.getRecycledViewPool().clear();
+        mLoadingItem.setVisibility(View.GONE);
         mListOfObjects.addAll(photos);
+        mAdapter.notifyDataSetChanged();
 
-        Log.d(TAG, "prepareToPresentPhotos photos" + photos);
         if (mIdlingResource != null) {
             mIdlingResource.setIdleState(true);
         }
-        Log.d(TAG, "prepareToPresentPhotos mRecyclerView" + mRecyclerView);
-        Log.d(TAG, "prepareToPresentPhotos mListOfObjects" + mListOfObjects);
 
-        if (mListOfObjects.size() == 0){
-            Log.d(TAG, "prepareToPresentPhotos mListOfObjects.size() == 0");
+        if (mListOfObjects.size() == 0) {
             showEmptyResult(View.VISIBLE, View.GONE, R.string.activity_main_search_empty);
+        } else {
+            Log.d(TAG, "prepareToPresentPhotos mListOfObjects.size() != 0");
+            showEmptyResult(View.GONE, View.VISIBLE, R.string.activity_main_search_empty);
         }
-// else {
-//            Log.d(TAG, "prepareToPresentPhotos mListOfObjects.size() != 0");
-//            showEmptyResult(View.GONE, View.VISIBLE, R.string.activity_main_search_empty);
-//        }
     }
 
     private void prepareToPresentPhotos(String searchQuery) {
@@ -173,14 +171,19 @@ public class MainActivity extends AppCompatActivity implements PhotosView {
         }
 
         if (App.isInternetAvailable(this)) {
+            isInternetAvailable = true;
+            Log.d(TAG, "isInternetAvailable");
             mListOfObjects = new ArrayList<>();
             setUpRecycler(mListOfObjects);
             mPhotosPresenter.findPhotos(this, searchQuery);
         } else {
+            isInternetAvailable = false;
+            Log.d(TAG, "isInternetAvailable = false " + isInternetAvailable);
             Toast.makeText(this, R.string.notification_no_internet_connection, Toast.LENGTH_LONG).show();
             showEmptyResult(View.VISIBLE, View.GONE, R.string.notification_no_internet_connection);
+            mLoadingItem.setVisibility(View.GONE);
         }
-        mLoadingItem.setVisibility(View.GONE);
+
     }
 
     @Override
@@ -227,7 +230,8 @@ public class MainActivity extends AppCompatActivity implements PhotosView {
             public boolean onMenuItemActionCollapse(MenuItem item) {
 
                 prepareToPresentPhotos(AppQueryPreferences.QUERY_TO_API_PICTURES_THEME);
-                if (mListOfObjects.size() == 0) showEmptyResult(View.GONE, View.VISIBLE, R.string.activity_main_search_empty);
+                if (mListOfObjects.size() == 0)
+                    showEmptyResult(View.GONE, View.VISIBLE, R.string.activity_main_search_empty);
 
                 MainActivity.this.setTitle(getResources().getString(R.string.app_name));
                 hideKeyboard(searchView);
@@ -240,11 +244,15 @@ public class MainActivity extends AppCompatActivity implements PhotosView {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String searchQuery) {
+
                 prepareToPresentPhotos(searchQuery);
-                if (mListOfObjects.size() == 0) showEmptyResult(View.GONE, View.VISIBLE, R.string.activity_main_search_empty);
-                    else {
-                        showEmptyResult(View.VISIBLE, View.GONE, R.string.activity_main_search_empty);
-                    }
+                if (mListOfObjects != null && mListOfObjects.size() == 0 && isInternetAvailable) {
+                    showEmptyResult(View.GONE, View.VISIBLE, R.string.activity_main_search_empty);
+                } else if (isInternetAvailable) {
+                    showEmptyResult(View.VISIBLE, View.GONE, R.string.activity_main_search_empty);
+                } else {
+                    showEmptyResult(View.VISIBLE, View.GONE, R.string.notification_no_internet_connection);
+                }
 
                 searchView.clearFocus();
                 mSearchQuery = searchQuery;

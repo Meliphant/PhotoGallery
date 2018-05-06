@@ -6,10 +6,9 @@ import android.support.test.espresso.IdlingResource;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class SimpleIdlingResource implements IdlingResource {
+    private final AtomicBoolean mIsIdleNow = new AtomicBoolean(true);
     @Nullable
     private volatile ResourceCallback mCallback;
-
-    private AtomicBoolean mIsIdleNow = new AtomicBoolean(true);
 
     @Override
     public String getName() {

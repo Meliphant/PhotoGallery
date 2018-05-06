@@ -14,6 +14,15 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:theme="@style/PhotoToolbarStyle" />
 
+    <ProgressBar
+        android:id="@+id/pb_loading_indicator_photo"
+        android:layout_width="@dimen/progressbar_size"
+        android:layout_height="@dimen/progressbar_size"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/activity_main_layout_margin_top"
+        android:theme="@style/PhotoTheme"
+        android:visibility="gone" />
+
     <com.github.chrisbanes.photoview.PhotoView
         android:id="@+id/iv_photo_activity"
         android:layout_width="match_parent"

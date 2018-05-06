@@ -4,7 +4,7 @@
     <color name="colorPrimaryPhoto">#000000</color>
     <color name="colorPrimaryMainActivity">#000000</color>
     <color name="colorPrimaryDark">#EEEEEE</color>
-    <color name="colorAccent">#4070ff</color>
+    <color name="colorAccent">#000000</color>
     <color name="textColorPrimary">#212121</color>
     <color name="colorAccentPhotoActivity">#ffffff</color>
     <color name="icLauncherBackground">#000000</color>

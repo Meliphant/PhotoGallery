@@ -15,6 +15,7 @@
         \n\nFor more info about Pexels check out their site.
     </string>
     <string name="activity_about_author"><a href="https://www.linkedin.com/in/olga-ponkratova">About author</a></string>
+    <string name="activity_about_description_imageview">Linkedin image</string>
     <string name="activity_main_description_imageview">This is the image from the images list.</string>
     <string name="photo_activity_description_imageview">This is the screen with one image.</string>
     <string name="photo_activity_downloaded_alert">Image successfully downloaded.</string>
